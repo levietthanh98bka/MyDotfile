@@ -15,6 +15,23 @@ USER_CONFIGS=$HOME/.config
 TARGET=
 CONFIGS=
 
+append_bashrc() {
+  #!/bin/bash
+
+  LINE='source "$HOME/.config/bash/init.sh"'
+  BASHRC="$HOME/.bashrc"
+
+  # Kiểm tra nếu dòng đã tồn tại, nếu chưa thì thêm vào cuối
+  if ! grep -Fxq "$LINE" "$BASHRC"; then
+      echo "$LINE" >> "$BASHRC"
+      echo "✅ Đã thêm vào ~/.bashrc"
+  else
+      echo "ℹ️ Dòng đã tồn tại trong ~/.bashrc, không cần thêm."
+  fi
+  source BASHRC
+
+}
+
 setup_dotfiles() {
 	if [[ -n $TARGET ]]; then
 		echo "[INFO] Setup dotfiles for $TARGET."
@@ -67,18 +84,23 @@ main() {
 		echo "Target list:"
 		echo "1: For KDE, GNOME, etc    (fish + kitty)"
 		echo "2: For WSL                (fish only)"
+    echo "3: For bash"
 		echo "_: Cancel"
 		echo -n "Select: "
 		read answer
 
 		case "${answer}" in
 		1)
-			CONFIGS=("fish" "kitty" "nvim")
+			CONFIGS=("fish" "kitty" "nvim" "bash")
 			;;
 		2)
 			CONFIGS=("fish")
 			TARGET='WSL'
 			;;
+    3)
+      CONFIGS=("bash")
+      append_bashrc
+      ;;
 		*)
 			echo "Canceled."
 			return 0
