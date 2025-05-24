@@ -12,8 +12,18 @@ ALL_CONFIGS=${SCRIPT_PATH}/configs
 # Config home
 USER_CONFIGS=$HOME/.config
 
+# custom plugin path
+CUSTOM_PATH=~/.local/share/nvim/site/pack/custom/start/
+
 TARGET=
 CONFIGS=
+
+copyPlugin() {
+	echo "start copy custom plugin"
+	mkdir -p $CUSTOM_PATH
+	cp -r ./configs/nvim/myFlugin/* $CUSTOM_PATH
+	echo "copy custom plugin done!!!!"
+}
 
 setup_dotfiles() {
 	if [[ -n $TARGET ]]; then
@@ -57,6 +67,8 @@ setup_dotfiles() {
 }
 
 main() {
+	copyPlugin
+	
 	if [[ ${IS_ROOT} = true ]]; then
 		CONFIGS=("fish")
 		TARGET='Root'
@@ -88,6 +100,7 @@ main() {
 
 	echo
 	setup_dotfiles
+	
 }
 
 main
