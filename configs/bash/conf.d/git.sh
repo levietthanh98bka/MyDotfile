@@ -1,6 +1,7 @@
 alias gcl='do_command "git clone"'
 alias gpl='do_command "git pull"'
-alias grs='do_command "git clean -fd; git reset --hard HEAD^; git pull"'
+alias grs='do_command "git reset --hard HEAD^; git pull"'
+alias grsa='do_command "git clean -fd; git reset --hard HEAD^; git pull"'
 
 alias glo='do_command "git log --oneline"'
 alias gst='do_command "git status"'
