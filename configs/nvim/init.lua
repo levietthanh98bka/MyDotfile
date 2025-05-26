@@ -43,6 +43,9 @@ require("lazy").setup({
     -- Theme
     try_require("plugins.catppuccin"),
 
+    -- Functionality
+    try_require("plugins.comment"),
+    
     -- UI
     -- try_require("plugins.nvim-tree"),
     try_require("plugins.lualine"),
@@ -51,7 +54,6 @@ require("lazy").setup({
     try_require("plugins.treesitter"),
     -- try_require("plugins.lsp"),
   },
-
   install = { colorscheme = { "catppuccin" } }, -- Config temporary theme for first time setup flugin
   checker = { enabled = false },                -- Automatically check for plugin updates periodically: enabled = false -> not auto upate.
 })

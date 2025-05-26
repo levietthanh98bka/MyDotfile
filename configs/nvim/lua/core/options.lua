@@ -1,4 +1,4 @@
-vim.opt.mouse = "a"                        -- bật toàn bộ hỗ trợ chuột
+vim.opt.mouse = ""                        -- bật toàn bộ hỗ trợ chuột
 
 vim.opt.number = true                    -- Hiển thị số dòng tuyệt đối
 vim.opt.relativenumber = true           -- Hiển thị số dòng tương đối (dòng hiện tại là tuyệt đối, các dòng khác là khoảng cách)
