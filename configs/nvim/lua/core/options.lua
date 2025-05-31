@@ -30,7 +30,7 @@ vim.opt.cmdheight = 1                  -- Chiều cao dòng lệnh (command line
 vim.opt.termguicolors = true           -- Bật hỗ trợ màu 24-bit (true color) trong terminal
 -- vim.opt.pumheight = 10                 -- Giới hạn độ cao của menu popup (menu gợi ý) là 10 dòng
 
-vim.opt.showtabline = 2                -- Luôn hiển thị thanh tab (ngay cả khi chỉ có 1 tab)
+-- vim.opt.showtabline = 2                -- Luôn hiển thị thanh tab (ngay cả khi chỉ có 1 tab)
 
 -- vim.opt.signcolumn = "yes"             -- Luôn hiển thị cột dấu (sign column) — dùng cho lỗi, breakpoint, v.v.
 vim.opt.splitbelow = true              -- Khi tách cửa sổ ngang, cửa sổ mới mở bên dưới

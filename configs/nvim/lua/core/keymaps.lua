@@ -3,10 +3,10 @@ vim.keymap.set("n", "<Space>q", ":q<CR>")     -- Space+q để thoát
 vim.keymap.set("n", "<Space>h", ":nohl<CR>")  -- Space+h để tắt highlight tìm kiếm
 
 
--- vim.g.mapleader = " "
+vim.g.mapleader = " "
 -- vim.g.maplocalleader = " "
 
--- local map = vim.keymap.set
+local map = vim.keymap.set
 -- local opts = { noremap = true, silent = true }
 
 -- map({ "n", "v" }, "<Space>", "<Nop>", opts)
@@ -30,10 +30,10 @@ vim.keymap.set("n", "<Space>h", ":nohl<CR>")  -- Space+h để tắt highlight t
 -- -- map("n", "<Right>", "<cmd>vertical resize +2<CR>", { noremap = true, desc = "Resize: width +2" })
 
 -- -- Navigate between windows
--- map("n", "<C-h>", "<cmd>wincmd h<CR>", { noremap = true, desc = "Window: Focus left" })
--- map("n", "<C-j>", "<cmd>wincmd j<CR>", { noremap = true, desc = "Window: Focus down" })
--- map("n", "<C-k>", "<cmd>wincmd k<CR>", { noremap = true, desc = "Window: Focus up" })
--- map("n", "<C-l>", "<cmd>wincmd l<CR>", { noremap = true, desc = "Window: Focus right" })
+map("n", "<C-h>", "<cmd>wincmd h<CR>", { noremap = true, desc = "Window: Focus left" })
+map("n", "<C-j>", "<cmd>wincmd j<CR>", { noremap = true, desc = "Window: Focus down" })
+map("n", "<C-k>", "<cmd>wincmd k<CR>", { noremap = true, desc = "Window: Focus up" })
+map("n", "<C-l>", "<cmd>wincmd l<CR>", { noremap = true, desc = "Window: Focus right" })
 
 -- -- Windows
 -- map("n", "<leader>wv", "<cmd>wincmd v<CR>", { noremap = true, desc = "Window: Split vertical" })

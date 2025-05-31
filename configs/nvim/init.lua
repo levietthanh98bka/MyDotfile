@@ -45,9 +45,10 @@ require("lazy").setup({
 
     -- Functionality
     try_require("plugins.comment"),
+    try_require("plugins.telescope"),
     
     -- UI
-    -- try_require("plugins.nvim-tree"),
+    try_require("plugins.nvim-tree"),
     try_require("plugins.lualine"),
 
     -- Devlopment
