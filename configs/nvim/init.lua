@@ -47,11 +47,13 @@ require("lazy").setup({
     try_require("plugins.comment"),
     try_require("plugins.telescope"),
     try_require("plugins.autocomplete"),
-    -- try_require("plugins.undotree"),
+    try_require("plugins.undotree"),
     
     -- UI
     try_require("plugins.nvim-tree"),
     try_require("plugins.lualine"),
+    try_require("plugins.alpha"),
+    try_require("plugins.mix"),
 
     -- Devlopment
     try_require("plugins.treesitter"),
