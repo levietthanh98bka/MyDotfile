@@ -48,6 +48,7 @@ require("lazy").setup({
     try_require("plugins.telescope"),
     try_require("plugins.autocomplete"),
     try_require("plugins.undotree"),
+    try_require("plugins.bufferline"),
     
     -- UI
     try_require("plugins.nvim-tree"),
