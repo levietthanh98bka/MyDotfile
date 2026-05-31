@@ -57,7 +57,7 @@ require("lazy").setup({
     try_require("plugins.mix"),
 
     -- Devlopment
-    try_require("plugins.treesitter"),
+    -- try_require("plugins.treesitter"),
     -- try_require("plugins.lsp"),
   },
   install = { colorscheme = { "catppuccin" } }, -- Config temporary theme for first time setup flugin

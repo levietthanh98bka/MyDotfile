@@ -1,7 +1,7 @@
 cd() {
     # Global variables for this SHELL session
-    declare -p KBC_CD_PREV &>/dev/null || declare -g KBC_CD_PREV=$HOME
-    declare -p KBC_CD_HISTORY_LEN &>/dev/null || declare -g -i KBC_CD_HISTORY_LEN=15
+    declare -p TBC_CD_PREV &>/dev/null || declare -g TBC_CD_PREV=$HOME
+    declare -p TBC_CD_HISTORY_LEN &>/dev/null || declare -g -i TBC_CD_HISTORY_LEN=15
 
     HISTORY_FILE=$HOME/.cd_history
     HISTORY_TEMP=$HISTORY_FILE.temp
@@ -30,7 +30,7 @@ cd() {
             cat "$HISTORY_FILE"
         } |
             awk '!seen[$0]++' |
-            head -n $KBC_CD_HISTORY_LEN |
+            head -n $TBC_CD_HISTORY_LEN |
             tee $HISTORY_TEMP >/dev/null &&
             mv $HISTORY_TEMP $HISTORY_FILE
 
@@ -129,7 +129,7 @@ cd() {
         if [[ -z "$cd_destination" ]]; then
             cd_destination="$HOME"
         elif [[ "$cd_destination" = '-' ]]; then
-            cd_destination="$KBC_CD_PREV"
+            cd_destination="$TBC_CD_PREV"
             echo -e "\e[1;33mcd\e[00m: $cd_destination"
         else
             local real_path=
@@ -149,7 +149,7 @@ cd() {
 
     [[ $cd_status -ne 0 ]] && return $cd_status
 
-    KBC_CD_PREV="$current_dir"
+    TBC_CD_PREV="$current_dir"
     __cd_update_history "$cd_destination"
 
     return 0

@@ -1,6 +1,6 @@
-function ___kfc_branch_info
+function ___branch_info
     # Failsafe
-    if not set -q KFC_GIT_PROMPT_LOCK
+    if not set -q TFC_GIT_PROMPT_LOCK
         return
     end
 
@@ -8,25 +8,25 @@ function ___kfc_branch_info
     set -f head_sha $argv[2]
 
     if test $bare_repo = true
-        echo $KFC_WHITE_N"   BARE"
+        echo $TFC_WHITE_N"   BARE"
         echo false
         return
     end
 
     set -f branch_name (command git branch --show-current)
     if test -z "$branch_name"
-        echo $KFC_YELLOW_N'  '$KFC_PINK_N(string shorten -m8 -c "" -- $head_sha)
+        echo $TFC_YELLOW_N'  '$TFC_PINK_N(string shorten -m8 -c "" -- $head_sha)
         echo true # this is a detached head
         return
     end
 
-    echo $KFC_YELLOW_N'  '$KFC_PURPLE_N$branch_name
+    echo $TFC_YELLOW_N'  '$TFC_PURPLE_N$branch_name
     echo false # this is not a detached head
 end
 
-function ___kfc_worktree_prompt
+function ___worktree_prompt
     # Failsafe
-    if not set -q KFC_GIT_PROMPT_LOCK
+    if not set -q TFC_GIT_PROMPT_LOCK
         return
     end
 
@@ -43,12 +43,12 @@ function ___kfc_worktree_prompt
 
     # Clean case
     if test $dirty = false; and test $untracked = false
-        echo $KFC_WHITE_N'  '$KFC_GREEN_N''
+        echo $TFC_WHITE_N'  '$TFC_GREEN_N''
         return
     end
 
-    set -f worktree_dirty $KFC_YELLOW_N''
-    set -f worktree_untrack $KFC_BLUE_N''
+    set -f worktree_dirty $TFC_YELLOW_N''
+    set -f worktree_untrack $TFC_BLUE_N''
 
     set -f worktree_string ''
 
@@ -65,12 +65,12 @@ function ___kfc_worktree_prompt
         end
     end
 
-    echo $KFC_WHITE_N'  '$worktree_string
+    echo $TFC_WHITE_N'  '$worktree_string
 end
 
-function ___kfc_relative_upstream
+function ___relative_upstream
     # Failsafe
-    if not set -q KFC_GIT_PROMPT_LOCK
+    if not set -q TFC_GIT_PROMPT_LOCK
         return
     end
 
@@ -86,15 +86,15 @@ function ___kfc_relative_upstream
         case "0 0" # equal to upstream
             echo ''
         case "0 *" # ahead of upstream
-            echo $KFC_GREEN_N' '$ahead
+            echo $TFC_GREEN_N' '$ahead
         case "* 0" # behind upstream
-            echo $KFC_YELLOW_N' '$behind
+            echo $TFC_YELLOW_N' '$behind
         case '*' # diverged from upstream
-            echo $KFC_RED_N''
+            echo $TFC_RED_N''
     end
 end
 
-function kfc_git_prompt
+function fish_git_prompt
     if not command -sq git
         echo ''
         return
@@ -112,35 +112,35 @@ function kfc_git_prompt
     set -f last_commit_id $git_info[4]
 
     if test $inside_gitdir = true; and test $bare_repo = false
-        echo $KFC_YELLOW_B'   GIT_DIR'
+        echo $TFC_YELLOW_B'   GIT_DIR'
         return
     end
 
     if test -z "$last_commit_id"; and test $bare_repo = false
-        echo $KFC_RED_B'   INVALID'
+        echo $TFC_RED_B'   INVALID'
         return
     end
 
-    set -g KFC_GIT_PROMPT_LOCK
+    set -g TFC_GIT_PROMPT_LOCK
     # No longer inside git directory from here
     # Unless is a BARE repository
-    set -f branch_info (___kfc_branch_info $bare_repo $last_commit_id)
+    set -f branch_info (___branch_info $bare_repo $last_commit_id)
     set -f branch_name $branch_info[1]
     set -f detached $branch_info[2]
     set -f worktree_prompt ''
     set -f relative_upstream ''
 
-    if test "$KFC_GIT_STATUS" = true; and test "$inside_workspace" = true
-        set worktree_prompt (___kfc_worktree_prompt)
+    if test "$TFC_GIT_STATUS" = true; and test "$inside_workspace" = true
+        set worktree_prompt (___worktree_prompt)
     end
 
-    if test -n "$worktree_prompt"; and test "$KFC_GIT_RELATIVE_COUNT" = true; and test "$detached" = false
-        set relative_upstream (___kfc_relative_upstream)
+    if test -n "$worktree_prompt"; and test "$TFC_GIT_RELATIVE_COUNT" = true; and test "$detached" = false
+        set relative_upstream (___relative_upstream)
         if test -n "$relative_upstream"
             set relative_upstream ' '$relative_upstream
         end
     end
 
     echo $branch_name$relative_upstream$worktree_prompt
-    set -e KFC_GIT_PROMPT_LOCK
+    set -e TFC_GIT_PROMPT_LOCK
 end

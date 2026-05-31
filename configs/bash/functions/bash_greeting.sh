@@ -1,5 +1,5 @@
 bash_greeting() {
-    if [[ -n "$KBC_BASH_GREETING" ]]; then
-        echo -e "$KBC_BASH_GREETING"
+    if [[ -n "$LVT_BASH_GREETING" ]]; then
+        echo -e "$LVT_BASH_GREETING"
     fi
 }

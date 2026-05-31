@@ -23,14 +23,14 @@ A custom fish shell configurations because I prefer not to use a package manager
 2. **To show git status**
 ```fish
 # Set this variable in your user config
-set -g KFC_GIT_STATUS true
+set -g TFC_GIT_STATUS true
 ```
 3. **To show relative distance of current commit to HEAD**
 ```fish
 # Set these variables in your user config
 # Both of them are required
-set -g KFC_GIT_STATUS true
-set -g KFC_GIT_RELATIVE_COUNT true
+set -g TFC_GIT_STATUS true
+set -g TFC_GIT_RELATIVE_COUNT true
 ```
 **Note:** Enabling the Git status prompt is not recommended for slow devices as it may result in significant delays.
 

@@ -49,7 +49,7 @@ bash_git_prompt() {
     fi
 
     # Fetch relative head count
-    if [[ "$KBC_SHOW_GIT_RELATIVE" =~ ^(true|yes|ok|1)$ ]]; then
+    if [[ "$TBC_SHOW_GIT_RELATIVE" =~ ^(true|yes|ok|1)$ ]]; then
         local ahead=
         local behind=
         read -r behind ahead < <(git rev-list --count --left-right @{upstream}...HEAD 2>/dev/null)
@@ -65,7 +65,7 @@ bash_git_prompt() {
     fi
 
     # Fetch status
-    if [[ "$KBC_SHOW_GIT_STATUS" =~ ^(true|yes|ok|1)$ ]]; then
+    if [[ "$TBC_SHOW_GIT_STATUS" =~ ^(true|yes|ok|1)$ ]]; then
         for stt in $(git status --short | awk '{print $1}' | uniq); do
             if [[ "$stt" =~ [ACDMR] ]]; then
                 dirty=true
