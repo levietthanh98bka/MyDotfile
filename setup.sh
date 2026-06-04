@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# Env
-PATH=/opt/homebrew/bin:$PATH
-IS_DARWIN=$(test $(uname -s) = 'Darwin' && echo true || echo false)
-IS_ROOT=$(test $USER = root && echo true || echo false)
-
 # Source path
 SCRIPT_PATH=$(realpath "$(dirname $0)")
 ALL_CONFIGS=${SCRIPT_PATH}/configs
@@ -12,12 +7,9 @@ ALL_CONFIGS=${SCRIPT_PATH}/configs
 # Config home
 USER_CONFIGS=$HOME/.config
 
-TARGET=
 CONFIGS=
 
 append_bashrc() {
-  #!/bin/bash
-
   LINE='source "$HOME/.config/bash/init.sh"'
   BASHRC="$HOME/.bashrc"
 
@@ -28,86 +20,80 @@ append_bashrc() {
   else
       echo "ℹ️ Dòng đã tồn tại trong ~/.bashrc, không cần thêm."
   fi
-  source BASHRC
-
+  source $BASHRC
 }
 
 setup_dotfiles() {
-	if [[ -n $TARGET ]]; then
-		echo "[INFO] Setup dotfiles for $TARGET."
-	else
-		echo "[INFO] Setup dotfiles."
-	fi
+	echo "Setup dotfiles."
 	echo "--------------------------------------"
 
 	if test $(pwd) != $SCRIPT_PATH; then
-		echo "[DEBUG] cd $SCRIPT_PATH"
+		echo "cd $SCRIPT_PATH"
 		cd ${SCRIPT_PATH}
 		echo "--------------------------------------"
 	fi
 
-	echo "[INFO] Backup or unlink old config"
+	echo "Backup or unlink old config"
 	for config in "${CONFIGS[@]}"; do
 		local conf_path=${USER_CONFIGS}/${config}
 		local conf_path_bak=${USER_CONFIGS}/${config}.bak
 
 		if [[ -L $conf_path ]]; then
-			echo "[DEBUG] unlink $conf_path"
+			echo "unlink $conf_path"
 			unlink $conf_path
 		elif [[ -d $conf_path ]]; then
 			rm -rf $conf_path_bak
-			echo "[DEBUG] Rename: $conf_path -> $conf_path_bak"
+			echo "Rename: $conf_path -> $conf_path_bak"
 			mv $conf_path $conf_path_bak
 		fi
 	done
 	echo "--------------------------------------"
 
-	echo "[INFO] Symlink new configs"
+	echo "Symlink new configs"
 	for config in "${CONFIGS[@]}"; do
-		echo "[DEBUG] Create symlink: ${USER_CONFIGS}/${config} -> ${ALL_CONFIGS}/${config}"
+		echo "Create symlink: ${USER_CONFIGS}/${config} -> ${ALL_CONFIGS}/${config}"
 		ln -s ${ALL_CONFIGS}/${config} ${USER_CONFIGS}/${config}
 	done
 	echo "--------------------------------------"
 
 	echo
-	echo "[INFO] Completed."
+	echo "Completed."
 }
 
 main() {
-	if [[ ${IS_ROOT} = true ]]; then
+	echo "Select config:"
+	echo "0: All(fish + kitty + nvim + bash)"
+	echo "1: fish + kitty"
+	echo "2: fish only (for WSL)"
+	echo "3: For nvim"
+	echo "4: For bash"
+	echo "_: Cancel"
+	echo -n "Select: "
+	read answer
+
+	case "${answer}" in
+	0)
+		CONFIGS=("fish" "kitty" "nvim" "bash")
+		append_bashrc
+		;;
+	1)
+		CONFIGS=("fish" "kitty")
+		;;
+	2)
 		CONFIGS=("fish")
-		TARGET='Root'
-	elif [[ ${IS_DARWIN} = true ]]; then
-		CONFIGS=("fish" "alacritty")
-		TARGET='Darwin'
-	else
-		echo "Target list:"
-		echo "1: For KDE, GNOME, etc    (fish + kitty)"
-		echo "2: For WSL                (fish only)"
-    echo "3: For bash"
-		echo "_: Cancel"
-		echo -n "Select: "
-		read answer
-
-		case "${answer}" in
-		1)
-			CONFIGS=("fish" "kitty" "nvim" "bash")
-			;;
-		2)
-			CONFIGS=("fish")
-			TARGET='WSL'
-			;;
-    3)
-      CONFIGS=("bash")
-      append_bashrc
-      ;;
-		*)
-			echo "Canceled."
-			return 0
-			;;
-		esac
-	fi
-
+		;;
+	3)
+		CONFIGS=("nvim")
+		;;
+	4)
+		CONFIGS=("bash")
+		append_bashrc
+		;;
+	*)
+		echo "Canceled."
+		return 0
+		;;
+	esac
 	echo
 	setup_dotfiles
 }
